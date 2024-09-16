@@ -14,6 +14,9 @@ import { logger } from '@/utils/logger';
 // Config
 import { graphqlHelmetConfig } from '@/config/index';
 
+// Constants
+import { ERRORS_MESSAGE } from '@/constants/errors-message.constant';
+
 // Modules
 import { AppModule } from './app.module';
 
@@ -52,8 +55,7 @@ async function bootstrap() {
   const registerLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: 10,
-    message:
-      'Too many accounts created from this IP, please try again after an hour',
+    message: ERRORS_MESSAGE.TOO_MANY_REQUESTS,
     keyGenerator: (req) => requestIp.getClientIp(req),
   });
   app.use('/auth/register', registerLimiter);
