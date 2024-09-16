@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  username      String?    
+  password      String
+  firstName     String
+  lastName      String
+  emailVerified Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  isTwoFactorAuthEnabled Boolean @default(false)
+  twoFactorAuthSecret String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+  roles         UserRole[]
+  permissions   UserPermission[]
+  refreshTokens RefreshToken[]
+  
+  @@index([email, username])
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  roles       RolePermission[]
+  users       UserPermission[]
+}
+
+model UserRole {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  role      Role     @relation(fields: [roleId], references: [id])
+  roleId    String
+  assignedAt DateTime @default(now())
+
+  @@id([userId, roleId])
+}
+
+model UserPermission {
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  permission  Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+  assignedAt  DateTime   @default(now())
+
+  @@id([userId, permissionId])
+}
+
+model RolePermission {
+  role        Role       @relation(fields: [roleId], references: [id])
+  roleId      String
+  permission  Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+  assignedAt  DateTime   @default(now())
+
+  @@id([roleId, permissionId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revokedAt DateTime?
+
+  @@index([userId])
+}

@@ -1,0 +1,139 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+type CreateUserResponse {
+  createdAt: DateTime!
+  email: String!
+  emailVerified: Boolean!
+  firstName: String!
+  id: ID!
+  isActive: Boolean!
+  isTwoFactorAuthEnabled: Boolean!
+  lastLoginAt: String
+  lastName: String!
+  twoFactorAuthSecret: String
+  updatedAt: DateTime!
+  username: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteUserInput {
+  id: Float!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+  refreshToken: String!
+}
+
+input LoginUserTwoFactorInput {
+  email: String!
+  password: String!
+  twoFactorToken: String!
+}
+
+type LoginUserTwoFactorResponse {
+  accessToken: String!
+  refreshToken: String!
+  twoFactorToken: String!
+}
+
+type LogoutResponse {
+  error: String
+  message: String!
+  success: Boolean!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): CreateUserResponse!
+  deleteUser(deleteUserInput: DeleteUserInput!): User!
+  enableTwoFactorAuth(token: String!): Boolean!
+  generateTwoFactorAuthSecret: TwoFactorAuthSecret!
+  login(loginInput: LoginInput!): LoginResponse!
+  loginWithTwoFactor(loginUserTwoFactorInput: LoginUserTwoFactorInput!): LoginUserTwoFactorResponse!
+  logout(refreshToken: String!): LogoutResponse!
+  refreshToken(refreshTokenInput: RefreshTokenInput!): RefreshTokenResponse!
+  register(registerInput: RegisterInput!): RegisterResponse!
+  revokeRefreshToken(refreshTokenInput: RefreshTokenInput!): Boolean!
+  updateUser(id: Float!, updateUserInput: UpdateUserInput!): User!
+}
+
+type Query {
+  allUsers: [User!]!
+  user(id: Float!): User!
+}
+
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+type RefreshTokenResponse {
+  accessToken: String!
+  refreshToken: String!
+}
+
+input RegisterInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+type RegisterResponse {
+  createdAt: DateTime!
+  email: String!
+  emailVerified: Boolean!
+  firstName: String!
+  id: ID!
+  isActive: Boolean!
+  isTwoFactorAuthEnabled: Boolean!
+  lastLoginAt: String
+  lastName: String!
+  twoFactorAuthSecret: String
+  updatedAt: DateTime!
+  username: String
+}
+
+type TwoFactorAuthSecret {
+  qrCodeDataURL: String!
+  secret: String!
+}
+
+input UpdateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+type User {
+  createdAt: DateTime!
+  email: String!
+  emailVerified: Boolean!
+  firstName: String!
+  id: ID!
+  isActive: Boolean!
+  isTwoFactorAuthEnabled: Boolean!
+  lastLoginAt: DateTime
+  lastName: String!
+  password: String!
+  twoFactorAuthSecret: DateTime
+  updatedAt: DateTime!
+  username: DateTime
+}
