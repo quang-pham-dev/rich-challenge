@@ -1,10 +1,12 @@
 {
-  "name": "rich",
+  "name": "rich-challenge",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": {
+    "name": "Quang Pham",
+    "email": "quangpn.developer@gmail.com"
+  },
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -18,7 +20,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "prettier": "yarn run format",
+    "prepare": "husky",
+    "pre-commit": ".husky/pre-commit"
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
@@ -72,8 +76,8 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/qrcode": "^1.5.5",
     "@types/supertest": "^6.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -87,7 +91,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "typescript": "~5.5.0"
   },
   "jest": {
     "moduleFileExtensions": [
